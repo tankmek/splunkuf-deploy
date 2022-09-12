@@ -33,5 +33,5 @@ The descriptions and defaults for all these variables can be found in the **defa
 
 | Name | Description |
 | ---- | ----------- |
-| **[`main.yml`](https://github.com/tankmek/splunkuf-deploy/blob/main/roles/splunkuf/defaults/main.yml)** | Splunk UF variables |
+| **[`main.yml`](https://github.com/tankmek/splunkuf-deploy/blob/main/roles/splunk_uf/defaults/main.yml)** | Splunk UF variables |
 

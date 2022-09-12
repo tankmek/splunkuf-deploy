@@ -2,5 +2,5 @@
 - hosts: honeypots
   become: yes
   roles:
-    - splunkuf
-
+    - splunk_uf
+...

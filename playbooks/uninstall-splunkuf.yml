@@ -6,6 +6,6 @@
   tasks:
     - name: Uninstall SplunkForwarder
       ansible.builtin.include_role:
-        name: splunkuf
+        name: splunk_uf
         tasks_from: remove-splunkuf.yml
 ...
