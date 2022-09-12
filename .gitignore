@@ -1,0 +1,8 @@
+*.pickle
+passwd
+shadow
+vault.yml
+inventory
+*.rpm
+*.deb
+*.tgz

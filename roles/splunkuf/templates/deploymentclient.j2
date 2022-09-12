@@ -1,0 +1,6 @@
+[deployment-client]
+phoneHomeIntervalInSecs={{ splunk.ds.phone_interval }}
+
+[target-broker:deploymentServer]
+targetUri={{ splunk.ds.url }}:{{ splunk.mgmt_port }}
+

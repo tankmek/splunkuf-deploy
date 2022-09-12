@@ -1,0 +1,8 @@
+---
+#
+- name: Starting SplunkForwarder using Systemd
+  ansible.builtin.systemd:
+    name: SplunkForwarder
+    state: started
+  when:
+    - splunk.systemd.enable|bool == true

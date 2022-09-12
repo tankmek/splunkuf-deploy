@@ -1,0 +1,6 @@
+# deploy and configure honeypot node
+- hosts: honeypots
+  become: yes
+  roles:
+    - splunkuf
+

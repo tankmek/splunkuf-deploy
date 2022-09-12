@@ -1,0 +1,47 @@
+---
+# copy and install splunk package
+
+  - name: create splunk work directory
+    ansible.builtin.file:
+      path: "{{ splunk.work_dir }}"
+      state: directory
+      mode: 0700
+
+  - name: copy splunk package to work directory
+    ansible.builtin.copy:
+      src: "{{ splunk.pkg }}"
+      dest: "{{ splunk.work_dir }}/{{ splunk.pkg }}"
+      mode: 0644
+
+  - name: verify file copied correctly (sha256)
+    ansible.builtin.stat:
+      path: "{{ splunk.work_dir }}/{{ splunk.pkg }}"
+      checksum_algorithm: sha256
+    register: hash
+
+  - debug:
+      msg: "SHA256 Checksum: Good"
+    when: "hash.stat.checksum|string in splunk.pkg_hash"
+
+  - name: install splunk package (RHEL Family)
+    ansible.builtin.yum:
+      name: "{{ splunk.work_dir }}/{{ splunk.pkg }}"
+      state: present
+    when:
+      - ansible_os_family == "RedHat"
+
+  - name: install splunk package (Debian Family)
+    ansible.builtin.apt:
+      deb: "{{ splunk.work_dir }}/{{ splunk.pkg }}"
+      state: present
+    when:
+      - ansible_os_family == "Debian"
+
+  - name: set splunk directory ownership
+    ansible.builtin.file:
+      path: "{{ splunk.hmdir }}"
+      state: directory
+      recurse: yes
+      owner: splunk
+      group: splunk
+...

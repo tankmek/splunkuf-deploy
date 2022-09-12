@@ -1,0 +1,43 @@
+---
+# Adapted from official splunk git repo
+# --------------------
+# All variable necessary for deployment
+# are listed here.
+# #--------------------------------
+
+splunk:
+  user: "splunk"
+  group: "splunk"
+  hmdir: "/opt/splunkforwarder"
+  exec: "/opt/splunkforwarder/bin/splunk"
+  admin_user: "admin"
+  service_name: "SplunkForwarder"
+  work_dir: "/tmp/splunk"
+  admin_hash: '$6$PIjgHyUlZ3MwD5wb$KrPwxv9h2lfwezJiw0UB8HDTmiY9mCIF4Y3kLwRAOrrSk.Njt0Q9PSex0EMYp2v3mi4fH5CdKYo8q9evC4cMg/'
+  # Download from the splunk website and place in the
+  # roles/splunkuf/files directory
+  pkg: "splunkforwarder-9.0.1-82c987350fde-linux-2.6-amd64.deb"
+  # sha256 hash of package used for verification
+  pkg_hash: "0bff7063655dbea2447e819789ad0952f707d979d85c52b835941dcabf3c48a1"
+  mgmt_port: 8089
+  web_port: 8000
+  fwd_port: 9777
+  # deployment server variables
+  ds:
+    # How frequently, in seconds, this deployment client should
+    # check for new content.
+    phone_interval: 60
+    # Deployment server IP or Domain name
+    url: "https://192.168.54.5"
+  indexer: "https://192.168.28.40"
+  systemd:
+    enable: true
+    # location of systemd unit file. Ansible uses
+    # this to avoid duplicate systemd configurations.
+    unit_path: "/etc/systemd/system"
+  # Deployment server variables
+  app_paths:
+    default: "/opt/splunk/etc/apps" 
+    shc: "/opt/splunk/etc/shcluster/apps"
+    idxc: "/opt/splunk/etc/master-apps"
+    deployment: "/opt/splunk/etc/deployment-apps"

@@ -1,0 +1,11 @@
+---
+# This installs the following systemd unit file, named Splunkd.service
+# by default, in /etc/systemd/system
+  - name: enable boot start and systemd mgmt
+    ansible.builtin.command:
+      cmd: "{{ splunk.exec }} enable boot-start -systemd-managed 1 -user {{ splunk.user }} --accept-license --answer-yes --no-prompt"
+      creates: "{{ splunk.systemd.unit_path }}/SplunkForwarder.service"
+
+    when:
+      - splunk.systemd.enable|bool == true
+...

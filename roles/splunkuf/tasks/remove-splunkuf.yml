@@ -1,0 +1,43 @@
+---
+  - name: Uninstall SplunkForwarder
+    block:
+      - name: stop splunkforwarder service
+        ansible.builtin.systemd:
+          name: "{{ splunk.service_name }}"
+          state: stopped
+
+      - name: disable splunkforwarder service
+        ansible.builtin.systemd:
+          name: "{{ splunk.service_name }}"
+          enabled: no
+
+      - name: uninstall splunk package
+        ansible.builtin.apt:
+          name: "splunkforwarder"
+          state: absent
+        when: ansible_os_family == 'Debian'
+
+      - name: uninstall splunk package
+        ansible.builtin.yum:
+          name: "splunkforwarder"
+          state: absent
+        when: ansible_os_family == 'Redhat'
+
+      - name: remove splunkforwarder directory
+        ansible.builtin.file:
+          path: "{{ splunk.hmdir }}" 
+          state: absent
+
+      - name: remove splunkforwarder systemd unit files
+        ansible.builtin.file:
+          path: "{{ splunk.systemd.unit_path }}/{{ splunk.service_name }}.service"
+          state: absent
+
+      - name: reload systemd
+        ansible.builtin.systemd:
+          daemon_reload: yes 
+
+        tags:
+          - never
+          - uninstall
+...

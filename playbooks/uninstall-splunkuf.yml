@@ -1,0 +1,11 @@
+---
+# deploy and configure honeypot node
+- name: Playbook
+  hosts: honeypots
+  become: yes
+  tasks:
+    - name: Uninstall SplunkForwarder
+      ansible.builtin.include_role:
+        name: splunkuf
+        tasks_from: remove-splunkuf.yml
+...

@@ -1,0 +1,7 @@
+---
+# 
+- include_tasks: install-splunkuf.yml
+- include_tasks: deploy-userseed.yml
+- include_tasks: deploy-configs.yml
+- include_tasks: enable-systemd.yml
+- include_tasks: start-splunkuf.yml

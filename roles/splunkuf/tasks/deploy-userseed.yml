@@ -1,0 +1,17 @@
+---
+# If the $SPLUNK_HOME/etc/passwd file is present,
+# the settings in user-seed.conf are not used.
+- name: Check if splunk passwd file exists
+  ansible.builtin.stat:
+    path: "{{ splunk.hmdir }}/etc/passwd"
+  register: st
+
+- name: Copy user-seed.conf to splunkforwarder directory
+  ansible.builtin.template:
+    src: "user-seed.j2"
+    dest: "{{ splunk.hmdir }}/etc/system/local/user-seed.conf"
+    owner: "{{ splunk.user }}"
+    group: "{{ splunk.group }}"
+    mode: 0640
+  when: not st.stat.exists
+...
